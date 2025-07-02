@@ -1,5 +1,10 @@
+#include "Core/Math.h"
 #include <iostream>
-int main()
-{
-	std::cout << "Hello, World!\n";
+
+#define NAME "Chris"
+
+int main() {
+	std::cout << NAME << std::endl;
+	std::cout << "Hello World!" << std::endl;
+	std::cout << viper::math::pi << std::endl;
 }
