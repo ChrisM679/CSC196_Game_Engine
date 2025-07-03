@@ -128,9 +128,6 @@
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Renderer\Renderer.vcxproj">
-      <Project>{c40f05ac-4922-467b-8181-f13b3a1d77c1}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\Engine\Engine.vcxproj">
       <Project>{f35e1ef9-00e8-46d5-bb01-c6445e56cd84}</Project>
     </ProjectReference>
