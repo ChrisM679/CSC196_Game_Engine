@@ -39,12 +39,12 @@ int main(int argc, char* argv[]) {
         SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255); // Set render draw color to green
         SDL_RenderFillRect(renderer, &greenSquare); // Render the rectangle
         
-        for(int i = 0; i < 200; ++i) {
+        for(int i = 0; i < 1000000; ++i) {
             SDL_SetRenderDrawColor(renderer, viper::random::getRandomInt(0, 255), viper::random::getRandomInt(0, 255), viper::random::getRandomInt(0, 255), 255);
             SDL_RenderPoint(renderer, viper::random::getRandomInt(), viper::random::getRandomInt());
 		}
 
-        for (int i = 0; i < 100; ++i) {
+        for (int i = 0; i < 100000; ++i) {
             SDL_SetRenderDrawColor(renderer, viper::random::getRandomInt(0, 255), viper::random::getRandomInt(0, 255), viper::random::getRandomInt(0, 255), 255);
             SDL_RenderLine(renderer, viper::random::getRandomInt(), viper::random::getRandomInt(), viper::random::getRandomInt(), viper::random::getRandomInt());
         }
