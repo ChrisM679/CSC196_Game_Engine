@@ -1,5 +1,5 @@
 #include "Math/Math.h"
-#include "Math/Vector2.h" // Ensure this header is included for Vector2 definition
+#include "Math/Vector2.h"
 #include "Core/Random.h"
 #include <SDL3/SDL.h>
 #include <iostream>
@@ -14,7 +14,7 @@ int main(int argc, char* argv[]) {
     SDL_Event e;
     bool quit = false;
 
-    Vector2<float> v(30, 40); // Specify the template type for Vector2
+    Vector2<float> v(30, 40);
 
     while (!quit) {
         while (SDL_PollEvent(&e)) {
