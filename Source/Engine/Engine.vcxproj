@@ -151,6 +151,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Core\Time.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
   </ItemGroup>

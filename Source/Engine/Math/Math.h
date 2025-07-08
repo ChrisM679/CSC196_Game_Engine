@@ -1,9 +1,10 @@
 #pragma once
 #include <algorithm>
+#include <cmath>
 
 namespace viper {
 	namespace math {
-		constexpr float pi = 3.1415926535897932384626433832795;
+		constexpr float pi = 3.1415926535897932384626433832795f;
 		constexpr float twoPi = 2 * pi;
 		constexpr float halfPi = pi * 0.5f;
 
@@ -24,5 +25,11 @@ namespace viper {
 		using std::min;
 		using std::max;
 		using std::clamp;
+		using std::sqrt;
+		using std::sqrtf;
+		using std::sin;
+		using std::sinf;
+		using std::cos;
+		using std::cosf;
 	}
 }
