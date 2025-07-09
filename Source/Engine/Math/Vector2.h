@@ -1,6 +1,6 @@
 #pragma once
+#include "Math.h"
 #include <cassert>
-#include <Math.h>
 
 namespace viper
 {
@@ -35,7 +35,16 @@ namespace viper
 		Vector2& operator *= (float s) { x *= s, y *= s; return *this; }
 		Vector2& operator /= (float s) { x /= s, y /= s; return *this; }
 
+		/// <summary>
+		/// Calculates the squared length (magnitude) of a 2D vector.
+		/// </summary>
+		/// <returns>The sum of the squares of the x and y components of the vector.</returns>
 		float LengthSqr() const  { return (x * x) + (y * y); }
+
+		/// <summary>
+		/// Calculates the length (magnitude) of the vector.
+		/// </summary>
+		/// <returns>The length of the vector as a floating-point value.</returns>
 		float Length() const { return viper::math::sqrtf(LengthSqr()); }
 	};
 
