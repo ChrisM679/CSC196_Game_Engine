@@ -1,27 +1,41 @@
 #include "Math/Math.h"
 #include "Math/Vector2.h"
+#include "Math/Vector3.h"
 #include "Core/Random.h"
 #include "Core/Time.h"
 #include "Audio/AudioSystem.h"
 #include "Renderer/Renderer.h"
+#include "Renderer/Model.h"
 #include "Input/InputSystem.h"
 
 #include <iostream>
 #include <vector>
 
 int main(int argc, char* argv[]) {
+    
+	// Intialize engine systems
     viper::Time time;
-    viper::Renderer renderer;
 
-    std::vector<viper::vec2> points;
+    viper::Renderer renderer;
     renderer.Initialize();
     renderer.CreateWindow("Viper Engine", 1280, 1024);
 
+    viper::InputSystem input;
+    input.Initialize();
+    
+	// Initialize audio system
     viper::AudioSystem audio;
 	audio.Initialize();
 
-    viper::InputSystem input;
-    input.Initialize();
+    std::vector<viper::vec2> points{
+        { -5, -5 },
+        {  5, -5 },
+        {  5,  5 },
+        { -5,  5 },
+        { -5, -5 },
+    };
+
+    viper::Model model{ points, { 0, 0, 1} };
 
     // Initialize sounds
     audio.AddSound("bass.wav", "base");
@@ -31,6 +45,7 @@ int main(int argc, char* argv[]) {
     audio.AddSound("close-hat.wav", "close-hat");
     audio.AddSound("open-hat.wav", "open-hat");
 
+	// Create stars
     std::vector<viper::vec2> stars;
     for (int i = 0; i < 100; i++) {
         stars.push_back(viper::vec2{ viper::random::getRandomFloat() * 1280, viper::random::getRandomFloat() * 1024 });
@@ -47,13 +62,7 @@ int main(int argc, char* argv[]) {
             }
         }
 
-        if (input.GetKeyDown(SDL_SCANCODE_ESCAPE)) {
-            quit = true;
-		}
-
-        // Update input system
-        audio.Update();
-        input.Update();
+        if (input.GetKeyPressed(SDL_SCANCODE_ESCAPE)) { quit = true; }
 
         if (input.GetMouseButtonPressed(viper::InputSystem::MouseButton::Left)) {
             points.push_back(input.GetMousePosition());
@@ -65,6 +74,11 @@ int main(int argc, char* argv[]) {
             else if ((position - points.back()).Length() > 10) points.push_back(position);
         }
 
+        // Update input system
+        audio.Update();
+        input.Update();
+
+        // Play drum sounds
         if (input.GetKeyDown(SDL_SCANCODE_Q)) audio.PlaySound("base");
         if (input.GetKeyDown(SDL_SCANCODE_W)) audio.PlaySound("snare");
         if (input.GetKeyDown(SDL_SCANCODE_E)) audio.PlaySound("clap");
@@ -86,23 +100,27 @@ int main(int argc, char* argv[]) {
         */
 
 		// Clear the renderer
-        renderer.SetColor(0, 0, 0);
+		viper::vec3 color{ 0, 0, 0};
+
+        renderer.SetColor(color.r, color.g, color.b);
         renderer.Clear();
 
+        model.Draw(renderer, input.GetMousePosition(), time.GetTime(), 10.0f);
+
 		// Draw stars
-        viper::vec2 speed{ 140.0f, 0.0f };
+        viper::vec2 speed{ -140.0f, 0.0f };
         float length = speed.Length();
 
         for (auto& star : stars) {
-            star = star * time.GetDeltaTime();
+            star += speed * time.GetDeltaTime();
 
-            if (star.x > 1280) star[0] = 0;
-            if (star.x > 0) star[0] = 1280;
+            if (star[0] > 1280) star[0] = 0;
+            if (star[0] < 0) star[0] = 1280;
 
-            renderer.SetColor(255, 255, 255);
+            renderer.SetColor((uint8_t)viper::random::getRandomInt(256), viper::random::getRandomInt(256), viper::random::getRandomInt(256));
             renderer.DrawPoint(star.x, star.y);
         }
-
+        /*
         for (int i = 0; i < (int)points.size() - 1; i++) {
             renderer.SetColor(viper::random::getRandomInt(0, 256), viper::random::getRandomInt(0, 256), viper::random::getRandomInt(0, 256));
             renderer.DrawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
@@ -113,7 +131,8 @@ int main(int argc, char* argv[]) {
             renderer.DrawLine(points[i].x, points[i].y, points[i + 1].x, points[i + 1].y);
         }
 
-        /*for (int i = 0; i < 10; i++) {
+        
+        for (int i = 0; i < 10; i++) {
             renderer.SetColor(viper::random::getRandomInt(0, 256), viper::random::getRandomInt(0, 256), viper::random::getRandomInt(0, 256));
             renderer.DrawLine(viper::random::getRandomFloat() * 1280, viper::random::getRandomFloat() * 1024, viper::random::getRandomFloat() * 1280, viper::random::getRandomFloat() * 1024);
         }
@@ -124,7 +143,8 @@ int main(int argc, char* argv[]) {
         }
 
         renderer.SetColor(viper::random::getRandomInt(0, 256), viper::random::getRandomInt(0, 256), viper::random::getRandomInt(0, 256));
-        renderer.DrawPoint(v.x, v.y);*/
+        renderer.DrawPoint(v.x, v.y);
+        */
 
         renderer.Present();
     }
