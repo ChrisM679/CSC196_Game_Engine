@@ -1,8 +1,10 @@
 #include "Math/Math.h"
 #include "Math/Vector2.h"
 #include "Math/Vector3.h"
+#include "Math/Transform.h"
 #include "Core/Random.h"
 #include "Core/Time.h"
+#include "Game/Actor.h"
 #include "Audio/AudioSystem.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/Model.h"
@@ -35,7 +37,14 @@ int main(int argc, char* argv[]) {
         { -5, -5 },
     };
 
-    viper::Model model{ points, { 0, 0, 1} };
+    viper::Model* model = new viper::Model{ points, { 0, 0, 1} };
+
+	std::vector<viper::Actor> actors;
+    for (int i = 0; i < 10; i++) {
+        viper::Transform transform{ { viper::random::getRandomFloat() * 1280, viper::random::getRandomFloat() * 1024 }, 0, 10 };
+        viper::Actor actor{ transform, model };
+		actors.push_back(actor);
+	}
 
     // Initialize sounds
     audio.AddSound("bass.wav", "base");
@@ -44,12 +53,6 @@ int main(int argc, char* argv[]) {
     audio.AddSound("cowbell.wav", "cowbell");
     audio.AddSound("close-hat.wav", "close-hat");
     audio.AddSound("open-hat.wav", "open-hat");
-
-	// Create stars
-    std::vector<viper::vec2> stars;
-    for (int i = 0; i < 100; i++) {
-        stars.push_back(viper::vec2{ viper::random::getRandomFloat() * 1280, viper::random::getRandomFloat() * 1024 });
-    }
 
     SDL_Event e;
     bool quit = false;
@@ -78,6 +81,7 @@ int main(int argc, char* argv[]) {
         audio.Update();
         input.Update();
 
+        /*
         // Play drum sounds
         if (input.GetKeyDown(SDL_SCANCODE_Q)) audio.PlaySound("base");
         if (input.GetKeyDown(SDL_SCANCODE_W)) audio.PlaySound("snare");
@@ -85,6 +89,26 @@ int main(int argc, char* argv[]) {
         if (input.GetKeyDown(SDL_SCANCODE_R)) audio.PlaySound("cowbell");
         if (input.GetKeyDown(SDL_SCANCODE_T)) audio.PlaySound("close-hat");
         if (input.GetKeyDown(SDL_SCANCODE_Y)) audio.PlaySound("open-hat");
+        */
+
+		//if (input.GetKeyDown(SDL_SCANCODE_A)) transform.rotation -= viper::math::degToRad(90) * time.GetDeltaTime());
+        //if (input.GetKeyDown(SDL_SCANCODE_D)) transform.rotation += viper::math::degToRad(90 * time.GetDeltaTime());
+
+        float speedz = 200;
+
+		viper::vec2 direction{ 0, 0 };
+        if (input.GetKeyDown(SDL_SCANCODE_W)) direction.y = -1; //speedz * time.GetDeltaTime();
+        if (input.GetKeyDown(SDL_SCANCODE_S)) direction.y = 1; //speedz * time.GetDeltaTime();
+        if (input.GetKeyDown(SDL_SCANCODE_A)) direction.x = -1; //speedz * time.GetDeltaTime();
+        if (input.GetKeyDown(SDL_SCANCODE_D)) direction.x = 1; //speedz * time.GetDeltaTime();
+
+        if (direction.Length() > 0) {
+            direction = direction.Normalized();
+            for (auto& actor : actors) {
+                actor.GetTransform().position += (direction * speedz) * time.GetDeltaTime();
+            }
+            //actor.GetTransform().position += (direction * speedz) * time.GetDeltaTime();
+		}
 
         /*
         if (input.GetKeyPressed(SDL_SCANCODE_A)) {
@@ -105,7 +129,17 @@ int main(int argc, char* argv[]) {
         renderer.SetColor(color.r, color.g, color.b);
         renderer.Clear();
 
-        model.Draw(renderer, input.GetMousePosition(), time.GetTime(), 10.0f);
+        //model.Draw(renderer, input.GetMousePosition(), time.GetTime(), 10.0f);
+		//model.Draw(renderer, transform);
+        for (auto& actor : actors) {
+            actor.Draw(renderer);
+		}
+
+        // Create stars
+        std::vector<viper::vec2> stars;
+        for (int i = 0; i < 100; i++) {
+            stars.push_back(viper::vec2{ viper::random::getRandomFloat() * 1280, viper::random::getRandomFloat() * 1024 });
+        }
 
 		// Draw stars
         viper::vec2 speed{ -140.0f, 0.0f };

@@ -154,6 +154,7 @@
     <ClCompile Include="Audio\AudioSystem.cpp" />
     <ClCompile Include="Core\Time.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Game\Actor.cpp" />
     <ClCompile Include="Input\InputSystem.cpp" />
     <ClCompile Include="Renderer\Model.cpp" />
     <ClCompile Include="Renderer\Renderer.cpp" />
@@ -164,8 +165,10 @@
     <ClInclude Include="Core\Random.h" />
     <ClInclude Include="Core\StringHelper.h" />
     <ClInclude Include="Core\Time.h" />
+    <ClInclude Include="Game\Actor.h" />
     <ClInclude Include="Input\InputSystem.h" />
     <ClInclude Include="Math\Math.h" />
+    <ClInclude Include="Math\Transform.h" />
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Renderer\Model.h" />
