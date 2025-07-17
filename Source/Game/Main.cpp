@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
 	// Initialize audio system
     viper::AudioSystem audio;
 	audio.Initialize();
-
+    
     std::vector<viper::vec2> points{
         { -5, -5 },
         {  5, -5 },
@@ -36,6 +36,17 @@ int main(int argc, char* argv[]) {
         { -5,  5 },
         { -5, -5 },
     };
+
+    /*
+    //ship
+    std::vector<viper::vec2> points{
+        { -5, -5 },
+        {  5, -2},
+        { -5,  1},
+        { -3, -2},
+        { -5, -5 },
+    };
+    */
 
     viper::Model* model = new viper::Model{ points, { 0, 0, 1} };
 
