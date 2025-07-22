@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Game/Actor.h"
+#include "Framework/Actor.h"
 
 class Enemy : public viper::Actor {
 public:
