@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
 
         // Update input system
 		viper::GetEngine().Update();
-		m_scene.Update(viper::GetEngine().GetTime().GetDeltaTime());
+        game->Update();
 
         /*
         // Play drum sounds
@@ -98,7 +98,7 @@ int main(int argc, char* argv[]) {
 
         //model.Draw(renderer, input.GetMousePosition(), time.GetTime(), 10.0f);
 		//model.Draw(renderer, transform);
-		m_scene.Draw(viper::GetEngine().GetRenderer());
+		game->Draw();
 
         // Create stars
         std::vector<viper::vec2> stars;
@@ -148,6 +148,7 @@ int main(int argc, char* argv[]) {
         viper::GetEngine().GetRenderer().Present();
     }
 
+	game->Shutdown();
     viper::GetEngine().Shutdown();
 
     return 0;
