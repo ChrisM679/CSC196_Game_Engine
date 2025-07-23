@@ -15,11 +15,11 @@ bool SpaceGame::Initialize() {
 	m_scene = std::make_unique<viper::Scene>();
 
     std::vector<viper::vec2> points{
-        { -5, -5 },
-        {  5, -2},
-        { -5,  1},
-        { -3, -2},
-        { -5, -5 },
+        { -2, 0 },
+        { -4, -2 },
+        { 4, 0 },
+        { -4, 2 },
+        { -2, 0 },
     };
 
     std::shared_ptr<viper::Model> model = std::make_shared<viper::Model>(points, viper::vec3{ 0.0f, 0.4f, 1.0f });

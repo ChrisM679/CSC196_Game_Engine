@@ -6,7 +6,7 @@
 void Player::Update(float dt)
 {
     float speed = 200;
-	float rotationSpeed = 180;
+	float rotationSpeed = 10;
 
     //Rotation
     float rotate = 0;

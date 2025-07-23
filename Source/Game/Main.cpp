@@ -23,9 +23,6 @@
 
 int main(int argc, char* argv[]) {
 
-    viper::Font* font = new viper::Font();
-    font->Load("arcadeclassic.ttf", 20);
-    
 	// Intialize engine
     viper::GetEngine().Initialize();
 
@@ -40,6 +37,9 @@ int main(int argc, char* argv[]) {
     viper::GetEngine().GetAudio().AddSound("cowbell.wav", "cowbell");
     viper::GetEngine().GetAudio().AddSound("close-hat.wav", "close-hat");
     viper::GetEngine().GetAudio().AddSound("open-hat.wav", "open-hat");
+
+    viper::Font* font = new viper::Font();
+    font->Load("MetalLord.ttf", 40);
 
     SDL_Event e;
     bool quit = false;
