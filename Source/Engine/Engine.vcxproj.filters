@@ -60,7 +60,7 @@
       <Filter>Source\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Text.cpp">
-      <Filter>Source</Filter>
+      <Filter>Source\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
