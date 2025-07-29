@@ -53,7 +53,7 @@ void SpaceGame::Update(float dt)
         auto player = std::make_unique<Player>(transform, model);
         player->speed = 1500.0f;
         player->rotationRate = 180.0f;
-        player->damping = 1.5f;
+        player->damping = 0.5f;
         player->name = "player";
         player->tag = "player";
 
@@ -71,7 +71,7 @@ void SpaceGame::Update(float dt)
             viper::Transform transform{ viper::vec2{ viper::random::getReal() * viper::GetEngine().GetRenderer().GetWidth(), viper::random::getReal() * viper::GetEngine().GetRenderer().GetHeight() }, 0, 10 };
             std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, enemyModel);
             enemy->damping = 0.2f;
-            enemy->speed = (viper::random::getReal() * 800) + 500;
+            enemy->speed = (viper::random::getReal() * 800) + 200;
             enemy->tag = "enemy";
             m_scene->AddActor(std::move(enemy));
         }
