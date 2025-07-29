@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "Engine.h"
 #include "Framework/Scene.h"
+#include "Framework/Game.h"
 #include "Renderer/Renderer.h"
 
 void Enemy::Update(float dt)
@@ -15,10 +16,18 @@ void Enemy::Update(float dt)
 	}
 
 	viper::vec2 force = viper::vec2{ 1,0 }.Rotate(viper::math::degToRad(m_transform.rotation)) * speed;
-	velocity += force * dt;
+	velocity += force;
 
 	m_transform.position.x = viper::math::wrap(m_transform.position.x, 0.0f, (float)viper::GetEngine().GetRenderer().GetWidth());
 	m_transform.position.y = viper::math::wrap(m_transform.position.y, 0.0f, (float)viper::GetEngine().GetRenderer().GetHeight());
 
 	Actor::Update(dt);
+}
+
+void Enemy::OnCollision(Actor* other)
+{
+	if (tag != other->tag) {
+		destroyed = true;
+		m_scene->GetGame()->AddPoints(100);
+	}
 }

@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 	// Intialize engine
     viper::GetEngine().Initialize();
 
-    /*
+    
     // Get current directory path
     std::cout << "Directory Operations:\n";
     std::cout << "Current directory: " << viper::file::GetCurrentDirectory() << "\n";
@@ -67,14 +67,11 @@ int main(int argc, char* argv[]) {
     else {
         std::cout << "Failed to read test.txt\n";
     }
-    */
+    
 
 	//Initialize game
 	std::unique_ptr<SpaceGame> game = std::make_unique<SpaceGame>();
 	game->Initialize();
-
-    viper::Font* font = new viper::Font();
-    font->Load("Assets/MetalLord.ttf", 40);
 
     SDL_Event e;
     bool quit = false;
@@ -88,9 +85,6 @@ int main(int argc, char* argv[]) {
 
         if (viper::GetEngine().GetInput().GetKeyPressed(SDL_SCANCODE_ESCAPE)) { quit = true; }
 
-        viper::Text* text = new viper::Text(font);
-        text->Create(viper::GetEngine().GetRenderer(), "Hello World", viper::vec3{ 1, 1, 1 });
-
         // Update input system
 		viper::GetEngine().Update();
         game->Update(viper::GetEngine().GetTime().GetDeltaTime());
@@ -102,9 +96,7 @@ int main(int argc, char* argv[]) {
         viper::GetEngine().GetRenderer().Clear();
 
 		game->Draw();
-
-        text->Draw(viper::GetEngine().GetRenderer(), 40.0f, 40.0f);
-
+        /*
         // Create stars
         std::vector<viper::vec2> stars;
         for (int i = 0; i < 100; i++) {
@@ -124,11 +116,12 @@ int main(int argc, char* argv[]) {
             viper::GetEngine().GetRenderer().SetColor((uint8_t)viper::random::getInt(256), viper::random::getInt(256), viper::random::getInt(256));
             viper::GetEngine().GetRenderer().DrawPoint(star.x, star.y);
         }
-
+        */
         viper::GetEngine().GetRenderer().Present();
     }
 
 	game->Shutdown();
+    game.release();
     viper::GetEngine().Shutdown();
 
     return 0;

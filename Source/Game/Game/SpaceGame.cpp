@@ -14,7 +14,13 @@
 
 bool SpaceGame::Initialize()
 {
-    m_scene = std::make_unique<viper::Scene>();
+    m_scene = std::make_unique<viper::Scene>(this);
+
+    m_titleFont = std::make_unique<viper::Font>();
+	m_titleFont->Load("Assets/MetalLord.ttf", 128);
+
+	m_uiFont = std::make_unique<viper::Font>();
+	m_uiFont->Load("Assets/MetalLord.ttf", 48);
 
     return true;
 }
@@ -24,7 +30,7 @@ void SpaceGame::Update(float dt)
     switch (m_gameState)
     {
     case SpaceGame::GameState::Initialize:
-        m_gameState = GameState::Title;
+        m_gameState = GameState::StartGame;
         break;
 
     case SpaceGame::GameState::Title:
@@ -44,7 +50,7 @@ void SpaceGame::Update(float dt)
         // create player
         std::shared_ptr<viper::Model> model = std::make_shared<viper::Model>(GameData::shipPoints, viper::vec3{ 0.0f, 0.4f, 1.0f });
         viper::Transform transform{ viper::vec2{ viper::GetEngine().GetRenderer().GetWidth() * 0.5f, viper::GetEngine().GetRenderer().GetHeight() * 0.5f }, 0, 5 };
-        std::unique_ptr<Player> player = std::make_unique<Player>(transform, model);
+        auto player = std::make_unique<Player>(transform, model);
         player->speed = 1500.0f;
         player->rotationRate = 180.0f;
         player->damping = 1.5f;

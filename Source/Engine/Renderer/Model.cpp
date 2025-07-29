@@ -34,9 +34,19 @@ namespace viper
 		// iterate through the points and draw lines between them
 		for (int i = 0; i < m_points.size() - 1; ++i)
 		{
-			vec2 p1 = (m_points[i].Rotate(transform.rotation) * transform.scale) + transform.position;
-			vec2 p2 = (m_points[i + 1].Rotate(transform.rotation) * transform.scale) + transform.position;
+			vec2 p1 = (m_points[i].Rotate(math::degToRad(transform.rotation)) * transform.scale) + transform.position;
+			vec2 p2 = (m_points[i + 1].Rotate(math::degToRad(transform.rotation)) * transform.scale) + transform.position;
 			renderer.DrawLine(p1.x, p1.y, p2.x, p2.y);
+		}
+	}
+	void Model::CalculateRadius()
+	{
+		m_radius = 0.0f;
+		for (const auto& point : m_points) {
+			float length = point.Length();
+			if (length > m_radius) {
+				m_radius = length;
+			}
 		}
 	}
 }

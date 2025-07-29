@@ -11,7 +11,10 @@ namespace viper {
 		std::string tag;
 
 		vec2 velocity{ 0, 0 };
-		float damping{ 0.2f };
+		float damping{ 0.0f };
+
+		bool destroyed{ false };
+		float lifespan{ 0.0f };
 
 		Transform m_transform;
 		class Scene* m_scene{ nullptr };
@@ -26,7 +29,9 @@ namespace viper {
 		virtual void Update(float dt);
 		virtual void Draw(class Renderer& renderer);
 
-		Transform& GetTransform() { return m_transform; }
+		virtual void OnCollision(Actor* other) = 0;
+
+		float GetRadius();
 
 	protected:
 		std::shared_ptr<Model> m_model;
