@@ -1,5 +1,4 @@
 #include "Renderer.h"
-#include <iostream>
 
 namespace viper {
     bool Renderer::Initialize() {

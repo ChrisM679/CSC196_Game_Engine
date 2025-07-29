@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "Actor.h"
+#include "../Core/StringHelper.h"
 #include "../Renderer/Renderer.h"
 
 namespace viper
@@ -28,7 +29,12 @@ namespace viper
 	/// Adds an actor to the scene by transferring ownership of the actor.
 	/// </summary>
 	/// <param name="m_actor">A unique pointer to the actor to be added. Ownership of the actor is transferred to the scene.</param>
-	void Scene::AddActor(std::unique_ptr<Actor> m_actor) {
-		m_actors.push_back(std::move(m_actor));
+	void Scene::AddActor(std::unique_ptr<Actor> actor) {
+		actor->m_scene = this;
+		m_actors.push_back(std::move(actor));
+	}
+	void Scene::RemoveAllActors()
+	{
+		m_actors.clear();
 	}
 }

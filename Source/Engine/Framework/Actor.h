@@ -1,6 +1,5 @@
 #pragma once
 #include "../Math/Transform.h"
-#include "../Renderer/Model.h"
 
 #include <string>
 #include <memory>
@@ -12,6 +11,10 @@ namespace viper {
 		std::string tag;
 
 		vec2 velocity{ 0, 0 };
+		float damping{ 0.2f };
+
+		Transform m_transform;
+		class Scene* m_scene{ nullptr };
 
 	public:
 		Actor() = default;
@@ -26,7 +29,6 @@ namespace viper {
 		Transform& GetTransform() { return m_transform; }
 
 	protected:
-		Transform m_transform;
 		std::shared_ptr<Model> m_model;
 	};
 }

@@ -1,36 +1,37 @@
 #include "File.h"
-
 #include <filesystem>
+#include <fstream>
+#include <sstream>
+#include <system_error>
 
-/*
 namespace viper {
 
     std::string GetCurrentDirectory() {
         std::error_code ec; 
-        auto path = std::filesystem::<https://en.cppreference.com/w/cpp/filesystem/current_path.html>;
+        auto path = std::filesystem::current_path(ec);
         return ec ? std::string{} : path.string();
     }
 
     bool SetCurrentDirectory(const std::string& path) {
         std::error_code ec;
-        std::filesystem::<https://en.cppreference.com/w/cpp/filesystem/current_path.html>;
+        std::filesystem::current_path(path, ec);
 
         return !ec;
     }
 
     std::string GetExtension(const std::string& path) {
         std::filesystem::path p(path);
-        return <https://www.geeksforgeeks.org/cpp/how-to-extract-file-name-and-extension-from-a-path-in-cpp/>.string();
+        return p.extension().string();
     }
 
     std::string GetFilename(const std::string& path) {
         std::filesystem::path p(path);
-        return <https://www.geeksforgeeks.org/cpp/how-to-extract-file-name-and-extension-from-a-path-in-cpp/>.string();
+        return p.filename().string();
     }
 
     bool Exists(const std::string& path) {
         std::error_code ec;
-        bool result = std::filesystem::<???>(path, ec);
+        bool result = std::filesystem::exists(path, ec);
 
         return !ec && result;
     }
@@ -75,10 +76,11 @@ namespace viper {
 
         // read entire file into string
         std::stringstream buffer;
-        // look at link on how-to read entire file into stringstream and convert buffer to string 
-        // <https://www.tutorialspoint.com/what-is-the-best-way-to-read-an-entire-file-into-a-std-string-in-cplusplus>
 
-            return true;
+        buffer << file.rdbuf();
+        content = buffer.str();
+
+        return true;
     }
 
     bool WriteTextFile(const std::string& path, const std::string& content, bool append) {
@@ -88,9 +90,9 @@ namespace viper {
             return false;
         }
 
-        // read content string into file <https://www.geeksforgeeks.org/cpp/file-handling-c-classes/>
+        file << content;
 
         return true;
     }
 }
-*/
+
