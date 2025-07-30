@@ -23,10 +23,13 @@ public:
 
 	void Update(float dt) override;
 	void Draw() override;
+
+	void OnPlayerDeath();
 		
 private:
 	GameState m_gameState = GameState::Initialize;
 	float m_enemySpawnTimer{ 0.0f };
+	float m_stateTimer{ 0.0f }; 
 
 	std::shared_ptr<class viper::Font> m_titleFont;
 	std::shared_ptr<class viper::Font> m_uiFont;

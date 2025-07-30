@@ -65,6 +65,9 @@
     <ClCompile Include="Core\File.cpp">
       <Filter>Source\Core</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\ParticleSystem.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Random.h">
@@ -119,6 +122,9 @@
       <Filter>Source\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Text.h">
+      <Filter>Source\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\ParticleSystem.h">
       <Filter>Source\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
