@@ -4,6 +4,8 @@
 #include "Framework/Game.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/Model.h"
+#include "Core/Random.h"
+#include "Renderer/ParticleSystem.h"
 #include "Player.h"
 #include "../Rocket.h"
 #include "../GameData.h"
@@ -50,5 +52,12 @@ void Enemy::OnCollision(Actor* other)
 	if (tag != other->tag) {
 		destroyed = true;
 		m_scene->GetGame()->AddPoints(100);
+		for (int i = 0; i < 100; i++) {
+			viper::Particle particle;
+			particle.position = m_transform.position;
+			particle.velocity = viper::random::onUnitCircle() * viper::random::getReal(10.0f, 200.0f);
+			particle.color = viper::vec3{ 1, 1, 1 };
+			particle.lifespan = 2;
+		}
 	}
 }

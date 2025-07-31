@@ -20,7 +20,7 @@ void Player::Update(float dt)
     partical.velocity = viper::vec2{ viper::random::getReal(-200.0f , 200.0f), viper::random::getReal(-200.0f , 200.0f) };
 	partical.color = viper::vec3{ 1.0f, 1.0f, 1.0f };
 	partical.lifespan = 2.0f;
-	viper::GetEngine().GetParticleSystem().AddParticle(partical);
+	//viper::GetEngine().GetParticleSystem().AddParticle(partical);
 
     //Rotation
     float rotate = 0;

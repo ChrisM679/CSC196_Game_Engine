@@ -71,17 +71,7 @@ void SpaceGame::Update(float dt)
         m_enemySpawnTimer -= dt;
         if (m_enemySpawnTimer <= 0) {
             m_enemySpawnTimer = 10;
-
-            // create enemies
-            std::shared_ptr<viper::Model> enemyModel = std::make_shared<viper::Model>(GameData::enemyPoints, viper::vec3{ 1 , 1 , 1 });
-            viper::Transform transform{ viper::vec2{ viper::random::getReal() * viper::GetEngine().GetRenderer().GetWidth(), viper::random::getReal() * viper::GetEngine().GetRenderer().GetHeight() }, 0, 10 };
-            std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, enemyModel);
-            enemy->damping = 0.2f;
-			enemy->fireTime = 3.0f;
-            enemy->fireTimer = 5.0f;
-            enemy->speed = (viper::random::getReal() * 200) + 300;
-            enemy->tag = "enemy";
-            m_scene->AddActor(std::move(enemy));
+			SpawnEnemies();
         }
 
         break;
@@ -138,6 +128,20 @@ void SpaceGame::OnPlayerDeath()
 {
 	m_gameState = GameState::PlayerDead;
 	m_stateTimer = 2.0f;
+}
+
+void SpaceGame::SpawnEnemies()
+{
+    // create enemies
+    std::shared_ptr<viper::Model> enemyModel = std::make_shared<viper::Model>(GameData::enemyPoints, viper::vec3{ 1 , 1 , 1 });
+    viper::Transform transform{ viper::vec2{ viper::random::getReal() * viper::GetEngine().GetRenderer().GetWidth(), viper::random::getReal() * viper::GetEngine().GetRenderer().GetHeight() }, 0, 10 };
+    std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(transform, enemyModel);
+    enemy->damping = 0.2f;
+    enemy->fireTime = 3.0f;
+    enemy->fireTimer = 5.0f;
+    enemy->speed = (viper::random::getReal() * 200) + 300;
+    enemy->tag = "enemy";
+    m_scene->AddActor(std::move(enemy));
 }
 
 void SpaceGame::Shutdown()
