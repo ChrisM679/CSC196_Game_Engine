@@ -18,10 +18,14 @@ bool SpaceGame::Initialize()
     m_scene = std::make_unique<viper::Scene>(this);
 
     m_titleFont = std::make_unique<viper::Font>();
-	m_titleFont->Load("Assets/MetalLord.ttf", 128);
+	m_titleFont->Load("MetalLord.ttf", 128);
 
 	m_uiFont = std::make_unique<viper::Font>();
-	m_uiFont->Load("Assets/MetalLord.ttf", 48);
+	m_uiFont->Load("MetalLord.ttf", 48);
+
+	m_titleText = std::make_unique<viper::Text>(m_titleFont);
+	m_scoreText = std::make_unique<viper::Text>(m_uiFont);
+	m_livesText = std::make_unique<viper::Text>(m_uiFont);
 
     return true;
 }
@@ -31,7 +35,7 @@ void SpaceGame::Update(float dt)
     switch (m_gameState)
     {
     case SpaceGame::GameState::Initialize:
-        m_gameState = GameState::StartGame;
+        m_gameState = GameState::Title;
         break;
 
     case SpaceGame::GameState::Title:
@@ -66,7 +70,7 @@ void SpaceGame::Update(float dt)
     case SpaceGame::GameState::Game:
         m_enemySpawnTimer -= dt;
         if (m_enemySpawnTimer <= 0) {
-            m_enemySpawnTimer = 4;
+            m_enemySpawnTimer = 10;
 
             // create enemies
             std::shared_ptr<viper::Model> enemyModel = std::make_shared<viper::Model>(GameData::enemyPoints, viper::vec3{ 1 , 1 , 1 });
@@ -96,8 +100,9 @@ void SpaceGame::Update(float dt)
         break;
     case SpaceGame::GameState::GameOver:
 		m_stateTimer -= dt;
-        if (m_state)
-		m_gameState = GameState::Title;
+        if (m_stateTimer <= 0) {
+            m_gameState = GameState::Title;
+        }
         break;
     default:
         break;
@@ -106,27 +111,27 @@ void SpaceGame::Update(float dt)
     m_scene->Update(viper::GetEngine().GetTime().GetDeltaTime());
 }
 
-void SpaceGame::Draw()
+void SpaceGame::Draw(viper::Renderer& renderer)
 {
     if (m_gameState == GameState::Title) {
 		m_titleText->Create(renderer, "PIT VIPER", viper::vec3{ 1.0f, 1.0f, 1.0f });
-        m_titleFont->Draw(renderer, 400, 400);
+        m_titleText->Draw(renderer, 400, 400);
     }
 
     if (m_gameState == GameState::GameOver) {
         m_titleText->Create(renderer, "GAME OVER", viper::vec3{ 1.0f, 0.0f, 0.0f });
-		m_titleFont->Draw(renderer, 400, 400);
+		m_titleText->Draw(renderer, 400, 400);
     }
 
 	m_scoreText->Create(renderer, "Score: " + std::to_string(m_score), viper::vec3{ 1.0f, 1.0f, 1.0f });
-	m_scoreText->Draw(renderer, 10, 10);
+	m_scoreText->Draw(renderer, 20, 20);
 
 	m_livesText->Create(renderer, "Lives: " + std::to_string(m_lives), viper::vec3{ 1.0f, 1.0f, 1.0f });
-	m_livesText->Draw(renderer, 10, 50);
+	m_livesText->Draw(renderer, (float)renderer.GetWidth() - 100, (float)20);
 
     m_scene->Draw(renderer);
 
-    
+	viper::GetEngine().GetParticleSystem().Draw(renderer);
 }
 
 void SpaceGame::OnPlayerDeath()

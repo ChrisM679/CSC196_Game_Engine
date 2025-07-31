@@ -9,7 +9,7 @@ namespace viper {
 		virtual bool Initialize() = 0;
 		virtual void Shutdown() = 0;
 		virtual void Update(float dt) = 0;
-		virtual void Draw() = 0;
+		virtual void Draw(class Renderer& renderer) = 0;
 
 		void AddPoints(int points) { m_score += points; }
 		int GetPoints() const { return m_score; }

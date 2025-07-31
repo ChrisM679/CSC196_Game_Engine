@@ -24,12 +24,24 @@
 
 int main(int argc, char* argv[]) {
 
+	viper::file::SetCurrentDirectory("Assets");
+
 	// Intialize engine
     viper::GetEngine().Initialize();
 
 	//Initialize game
 	std::unique_ptr<SpaceGame> game = std::make_unique<SpaceGame>();
 	game->Initialize();
+
+	//Initialize sounds
+	viper::GetEngine().GetAudio().AddSound("bass.wav");
+    viper::GetEngine().GetAudio().AddSound("clap.wav");
+
+    // Create stars
+    std::vector<viper::vec2> stars;
+    for (int i = 0; i < 100; i++) {
+        stars.push_back(viper::vec2{ viper::random::getReal() * 1280, viper::random::getReal() * 1024 });
+    }
 
     SDL_Event e;
     bool quit = false;
@@ -53,13 +65,7 @@ int main(int argc, char* argv[]) {
         viper::GetEngine().GetRenderer().SetColor(color.r, color.g, color.b);
         viper::GetEngine().GetRenderer().Clear();
 
-		game->Draw();
-        
-        // Create stars
-        std::vector<viper::vec2> stars;
-        for (int i = 0; i < 100; i++) {
-            stars.push_back(viper::vec2{ viper::random::getReal() * 1280, viper::random::getReal() * 1024 });
-        }
+		game->Draw(viper::GetEngine().GetRenderer());
 
 		// Draw stars
         viper::vec2 speed{ -140.0f, 0.0f };
